@@ -2,19 +2,55 @@ function fixation(c) {
     //generates fixation by drawing on HTML canvas.
     //function takes the canvas(c) as input and generates the figure
     var context = c.getContext("2d"); //Name of the canvas
-    context.moveTo(240, 250); //start of horizontal line
-    context.lineTo(280, 250); //end of horizontal line
-    context.moveTo(260, 230); //start of vertical line
-    context.lineTo(260, 270); //end of vertical line
+    context.moveTo(230, 275); context.lineTo(270, 275); //horizontal line
+    context.moveTo(251, 255); context.lineTo(251, 295); //vertical line
+    //context.moveTo(240, 250); //start of horizontal line
+    //context.lineTo(280, 250); //end of horizontal line
+    //context.moveTo(260, 230); //start of vertical line
+    //context.lineTo(260, 270); //end of vertical line
     context.filter = 'contrast(1)'; //keeps the contrast constant
     context.lineWidth = 3; // width of the lines in the fixation cross
     context.stroke(); // draws the images on the canvas
 }
 
 function gabor(c) {
+    var context = c.getContext("2d"); //Name of the canvas
+    const my_gradient = context.createLinearGradient(0,0,200,0); const my_gradient1 = context.createLinearGradient(225,0,425,0); //two gradients for two gabors
+    const bands = 10; const colors = ["#000", "#FFF"]; // setting the color for the bands
+    const stops = bands * colors.length; //number of layers that you want to color in the patch
+    var pos = 0; var pos1 = 0;
+    while (pos <= stops) { //colors each band of the patch with white and black.
+        my_gradient1.addColorStop(pos / stops, colors[pos % colors.length]);
+        pos++;
+    }
+    while (pos1 <= stops) {
+        my_gradient.addColorStop(pos1 / stops, colors[pos1 % colors.length]);
+        pos1++;
+    }
+    context.fillStyle = my_gradient; // defining the gradient for the left Gabor
+    context.filter = 'contrast('+ jsPsych.currentTrial().contrast_left +')' //contrast level randomly generated after every trial
+    context.fillRect(100,220,100,100); //co-ordinates of the left patch
+    context.fillStyle = my_gradient1; // defining the gradient for the right Gabor
+    context.filter = 'contrast('+ jsPsych.currentTrial().contrast_right +')'
+    context.fillRect(305,220,100,100); //co-ordinates of the right patch
+    context.stroke() // drawing the two patches
+
+    context.beginPath();
+    context.strokeStyle = "#000000";
+    context.moveTo(230, 275); context.lineTo(270, 275); //horizontal line
+    context.moveTo(251, 255); context.lineTo(251, 295); //vertical line
+    context.filter = 'contrast(1)'; context.lineWidth = 3;
+
+    context.stroke(); // drawing the fixation cross
+};
+
+function gabor_mu(c) {
     // function takes the canvas as input
     //generates 2 gabors left and right to the fixation
     var context = c.getContext("2d"); //Name of the canvas
+    context.font = "20px Arial";
+    context.fillStyle = "#1b6601";
+    context.fillText("Please respond now.",155,170);
     const my_gradient = context.createLinearGradient(0,0,200,0); const my_gradient1 = context.createLinearGradient(225,0,425,0); //two gradients for two gabors
     const bands = 10; const colors = ["#000", "#FFF"]; // setting the color for the bands
     const stops = bands * colors.length; //number of layers that you want to color in the patch
@@ -34,12 +70,63 @@ function gabor(c) {
     context.filter = 'contrast('+ jsPsych.currentTrial().contrast_right +')'
     context.fillRect(305,200,100,100); //co-ordinates of the right patch
     context.stroke() // drawing the two patches
-    context.moveTo(232, 263); context.lineTo(272, 263); //horizontal line
-    context.moveTo(253, 243); context.lineTo(253, 283); //vertical line
+
+    context.beginPath();
+    context.strokeStyle = "#1b6601";
+    context.lineWidth= 5;
+    context.filter = 'contrast(1)';
+    context.strokeRect(jsPsych.currentTrial().x,200,100,100);
+    context.stroke();
+
+    context.beginPath();
+    context.strokeStyle = "#000000";
+    context.moveTo(230, 255); context.lineTo(270, 255); //horizontal line
+    context.moveTo(251, 235); context.lineTo(251, 275); //vertical line
     context.filter = 'contrast(1)'; context.lineWidth = 3;
     context.stroke(); // drawing the fixation cross
 };
 
+function gabor_mu_wait(c) {
+    // function takes the canvas as input
+    //generates 2 gabors left and right to the fixation
+    var context = c.getContext("2d"); //Name of the canvas
+    context.font = "20px Arial";
+    context.fillStyle = "#FF0000";
+    context.fillText("Please wait.",195,170);
+    const my_gradient = context.createLinearGradient(0,0,200,0); const my_gradient1 = context.createLinearGradient(225,0,425,0); //two gradients for two gabors
+    const bands = 10; const colors = ["#000", "#FFF"]; // setting the color for the bands
+    const stops = bands * colors.length; //number of layers that you want to color in the patch
+    var pos = 0; var pos1 = 0;
+    while (pos <= stops) { //colors each band of the patch with white and black.
+        my_gradient1.addColorStop(pos / stops, colors[pos % colors.length]);
+        pos++;
+    }
+    while (pos1 <= stops) {
+        my_gradient.addColorStop(pos1 / stops, colors[pos1 % colors.length]);
+        pos1++;
+    }
+    context.fillStyle = my_gradient; // defining the gradient for the left Gabor
+    context.filter = 'contrast('+ jsPsych.currentTrial().contrast_left +')' //contrast level randomly generated after every trial
+    context.fillRect(100,200,100,100); //co-ordinates of the left patch
+    context.fillStyle = my_gradient1; // defining the gradient for the right Gabor
+    context.filter = 'contrast('+ jsPsych.currentTrial().contrast_right +')'
+    context.fillRect(305,200,100,100); //co-ordinates of the right patch
+    context.stroke() // drawing the two patches
+
+    context.beginPath();
+    context.strokeStyle = "#FF0000";
+    context.lineWidth= 5;
+    context.filter = 'contrast(1)';
+    context.strokeRect(jsPsych.currentTrial().x,200,100,100);
+    context.stroke();
+
+    context.beginPath();
+    context.strokeStyle = "#000000";
+    context.moveTo(230, 255); context.lineTo(270, 255); //horizontal line
+    context.moveTo(251, 235); context.lineTo(251, 275); //vertical line
+    context.filter = 'contrast(1)'; context.lineWidth = 3;
+    context.stroke(); // drawing the fixation cross
+};
 function randbet(min, max) {
     //randbet takes two inputs and generates a randomly number between the min and max number.
     // min and max are the upper and lower bound.
@@ -119,22 +206,12 @@ var missed_contrast = [];
 
 
 // contrast difference levels for both conditions
-var high_min_neg = -0.15
-var high_max_neg  = -0.05
-var high_max = 0.15
-var high_min = 0.05
+var high_min_neg = -0.10
+var high_max_neg  = 0
+var high_max = 0.10
+var high_min = 0
 var low_min = 0.35
 var low_max = 0.45
 var low_max_neg = -0.35
 var low_min_neg = -0.45
 var avgcon = 0.5
-
-function missed_text (){
-    if (missed_trial.contrast === 0) {
-        text()
-    }
-    else {
-        text_1()
-    }
-}
-

@@ -110,7 +110,7 @@ jsPsych.plugins['canvas-slider-response'] = (function () {
 
     plugin.trial = function (display_element, trial) {
 
-        var html = '<div id="jspsych-canvas-slider-response-wrapper" style="margin: 100px 0px;">';
+        var html = '<div id="jspsych-canvas-slider-response-wrapper" style="margin: 0px 100px;">';
         html += '<div id="jspsych-canvas-slider-response-stimulus">' + '<canvas id="jspsych-canvas-stimulus" height="' + trial.canvas_size[0] + '" width="' + trial.canvas_size[1] + '"></canvas>' + '</div>';
         html += '<div class="jspsych-canvas-slider-response-container" style="position:relative; margin: 0 auto 3em auto; width:';
         if (trial.slider_width !== null) {
@@ -119,8 +119,8 @@ jsPsych.plugins['canvas-slider-response'] = (function () {
             html += trial.canvas_size[1] + 'px;';
         }
         html += '">';
-        //html += '<input type="range" value="' + trial.slider_start + '" min="' + trial.min + '" max="' + trial.max + '" step="' + trial.step + '" style="width: 100%;" id="jspsych-canvas-slider-response-response"></input>';
-        html += '<input type="range" class="jspsych-slider" value="'+trial.slider_start+'" min="'+trial.min+'" max="'+trial.max+'" step="'+trial.step+'" id="jspsych-html-slider-response-response"></input>';
+        html += '<input type="range" class="jspsych-slider" value="' + trial.slider_start + '" min="' + trial.min + '" max="' + trial.max + '" step="' + trial.step + '" style="width: 100%;" id="jspsych-canvas-slider-response-response"></input>';
+        //html += '<input type="range" class="jspsych-slider" value="'+trial.slider_start+'" min="'+trial.min+'" max="'+trial.max+'" step="'+trial.step+'" id="jspsych-canvas-slider-response-response"></input>';
 
         html += '<div>'
         for (var j = 0; j < trial.labels.length; j++) {
